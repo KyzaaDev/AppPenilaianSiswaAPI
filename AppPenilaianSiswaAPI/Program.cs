@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISiswaService, SiswaService>();
+builder.Services.AddScoped<IKelasService, KelasService>();
 builder.Services.AddScoped<IJurusanService, JurusanService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
