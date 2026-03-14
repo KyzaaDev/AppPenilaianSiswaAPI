@@ -26,7 +26,7 @@ namespace AppPenilaianSiswaAPI.Services.Implements
             if (user == null) return null;
 
             var isValid = BCrypt.Net.BCrypt.Verify(data.Password, user.Password);
-            if (!isValid) throw new Exception("Password atau username salah");
+            if (!isValid) throw new Exception("Username atau password salah!");
 
             return new AuthResponseDTO
             {

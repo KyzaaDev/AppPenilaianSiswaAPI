@@ -21,12 +21,12 @@ namespace AppPenilaianSiswaAPI.Controllers
             try
             {
                 var Operator = await _authService.Login(login);
-                if (Operator == null) return NotFound(new { message = $"Tidak ditemukan operator dengan username {login.Username}" });
+                if (Operator == null) return Unauthorized(new { message = "Username atau password salah!" });
                 return Ok(Operator);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                return Unauthorized(ex.Message);
             }
         }
     }
