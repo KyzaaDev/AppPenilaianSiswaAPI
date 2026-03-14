@@ -1,5 +1,6 @@
 ﻿using AppPenilaianSiswaAPI.Data;
 using AppPenilaianSiswaAPI.DTOs.Kelas;
+using AppPenilaianSiswaAPI.DTOs.Jurusans;
 using AppPenilaianSiswaAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,11 @@ namespace AppPenilaianSiswaAPI.Services.Implements
             {
                 KelasId = dk.KelasId,
                 KelasName = dk.NamaKelas,
-                JurusanName = dk.Jurusan.NamaJurusan,
+                Jurusan = new JurusanResponseDTO
+                {
+                    JurusanId = dk.JurusanId,
+                    JurusanName = dk.Jurusan.NamaJurusan
+                },
             }).ToListAsync();
 
             if (!daftarKelas.Any()) return null;
