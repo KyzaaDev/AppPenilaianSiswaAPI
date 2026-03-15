@@ -33,7 +33,7 @@ namespace AppPenilaianSiswaAPI.Services.Implements
 
         public async Task<SiswaResponseDTO> CreateSiswa(SiswaCreateDTO siswaBaru)
         {
-            var kelas = await _context.Kelas.FindAsync(siswaBaru.KelasId);
+            var kelas = await _context.Kelas.Include(k => k.Jurusan).FirstOrDefaultAsync(k => k.KelasId == siswaBaru.KelasId);
             if (kelas == null) throw new Exception($"Tidak ada kelas dengan ID {siswaBaru.KelasId}");
 
             var dataBaru = new Siswa
@@ -52,8 +52,8 @@ namespace AppPenilaianSiswaAPI.Services.Implements
                 SiswaId = dataBaru.SiswaId,
                 Nisn = dataBaru.Nisn,
                 NamaSiswa = dataBaru.NamaSiswa,
-                Kelas = dataBaru.Kelas.NamaKelas,
-                Jurusan = dataBaru.Kelas.Jurusan.NamaJurusan,
+                Kelas = kelas.NamaKelas,
+                Jurusan = kelas.Jurusan.NamaJurusan,
                 Picture = dataBaru.SiswaPicture
             };
         }

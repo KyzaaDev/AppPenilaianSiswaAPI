@@ -58,7 +58,7 @@ namespace AppPenilaianSiswaAPI.Controllers
             try
             {
                 var siswa = await _siswaService.DeleteSiswa(id);
-                return NotFound();
+                return NoContent();
             }
             catch (Exception ex)
             {
