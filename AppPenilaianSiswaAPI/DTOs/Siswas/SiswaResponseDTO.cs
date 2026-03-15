@@ -8,6 +8,6 @@
         public string Kelas { get; set; }
         public string Jurusan { get; set; }
         public string Picture { get; set; }
-        public int KelasId { get; set; }
+        //public int KelasId { get; set; }
     }
 }

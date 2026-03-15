@@ -24,7 +24,6 @@ namespace AppPenilaianSiswaAPI.Services.Implements
                 Kelas = s.Kelas.NamaKelas,
                 Jurusan = s.Kelas.Jurusan.NamaJurusan,
                 Picture = s.SiswaPicture,
-                KelasId = s.Kelas.KelasId,
             }).ToListAsync();
 
             if (!allSiswa.Any()) return null;
@@ -56,7 +55,6 @@ namespace AppPenilaianSiswaAPI.Services.Implements
                 Kelas = kelas.NamaKelas,
                 Jurusan = kelas.Jurusan.NamaJurusan,
                 Picture = dataBaru.SiswaPicture,
-                KelasId = kelas.KelasId,
             };
         }
 
@@ -73,7 +71,6 @@ namespace AppPenilaianSiswaAPI.Services.Implements
                 Kelas = s.Kelas.NamaKelas,
                 Jurusan = s.Kelas.Jurusan.NamaJurusan,
                 Picture = s.SiswaPicture, 
-                KelasId = s.Kelas.KelasId,
             };
         }
 
@@ -108,7 +105,6 @@ namespace AppPenilaianSiswaAPI.Services.Implements
                 Kelas = siswa.Kelas.NamaKelas,
                 Jurusan = siswa.Kelas.Jurusan.NamaJurusan,
                 Picture = siswa.SiswaPicture,
-                KelasId = siswa.KelasId,
             };
         }
     }
