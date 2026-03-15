@@ -94,7 +94,7 @@ namespace AppPenilaianSiswaAPI.Services.Implements
 
             siswa.Nisn = updSiswa.Nisn;
             siswa.NamaSiswa = updSiswa.NamaSiswa;
-            siswa.KelasId = updSiswa.KelasId;
+            siswa.Kelas.KelasId = updSiswa.KelasId;
             siswa.SiswaPicture = updSiswa.Picture;
 
             await _context.SaveChangesAsync();
