@@ -94,10 +94,11 @@ namespace AppPenilaianSiswaAPI.Services.Implements
 
             siswa.Nisn = updSiswa.Nisn;
             siswa.NamaSiswa = updSiswa.NamaSiswa;
-            siswa.Kelas.KelasId = updSiswa.KelasId;
+            siswa.KelasId = updSiswa.KelasId;
             siswa.SiswaPicture = updSiswa.Picture;
 
             await _context.SaveChangesAsync();
+            siswa = await _context.Siswas.Include(s => s.Kelas).ThenInclude(s => s.Jurusan).FirstOrDefaultAsync(s => s.SiswaId == id);
 
             return new SiswaResponseDTO
             {
