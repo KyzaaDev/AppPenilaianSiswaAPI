@@ -83,5 +83,28 @@ namespace AppPenilaianSiswaAPI.Services.Implements
             await _context.SaveChangesAsync();
             return true; 
         }
+
+        public async Task<SiswaResponseDTO> UpdateSiswa(SiswaUpdateDTO updSiswa, int id)
+        {
+            var siswa = await _context.Siswas.Include(s => s.Kelas).ThenInclude(s => s.Jurusan).FirstOrDefaultAsync(s => s.SiswaId == id);
+            if (siswa == null) throw new Exception($"Data siswa dengan ID {id} tidak ditemukan");
+
+            siswa.Nisn = updSiswa.Nisn;
+            siswa.NamaSiswa = updSiswa.NamaSiswa;
+            siswa.KelasId = updSiswa.KelasId;
+            siswa.SiswaPicture = updSiswa.Picture;
+
+            await _context.SaveChangesAsync();
+
+            return new SiswaResponseDTO
+            {
+                SiswaId = siswa.SiswaId,
+                Nisn = siswa.Nisn,
+                NamaSiswa = siswa.NamaSiswa,
+                Kelas = siswa.Kelas.NamaKelas,
+                Jurusan = siswa.Kelas.Jurusan.NamaJurusan,
+                Picture = siswa.SiswaPicture
+            };
+        }
     }
 }

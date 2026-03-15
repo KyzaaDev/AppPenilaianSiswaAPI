@@ -64,8 +64,22 @@ namespace AppPenilaianSiswaAPI.Controllers
             {
                 return NotFound(new { message = ex.Message });
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<SiswaResponseDTO>> UpdateSiswa([FromBody] SiswaUpdateDTO updSiswa, int id)
+        {
+            try
+            {
+                var siswaUpd = await _siswaService.UpdateSiswa(updSiswa, id);
+                return siswaUpd;
+            }
+            catch(Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
             
-            
+
         }
     }
 }
