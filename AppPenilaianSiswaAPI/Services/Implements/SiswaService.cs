@@ -16,7 +16,7 @@ namespace AppPenilaianSiswaAPI.Services.Implements
 
         public async Task<IEnumerable<SiswaResponseDTO>> GetAllAsync()
         {
-            var allSiswa = await _context.Siswas.Select(s => new SiswaResponseDTO
+            var allSiswa = await _context.Siswas.AsNoTracking().Select(s => new SiswaResponseDTO
             {
                 SiswaId = s.SiswaId,
                 Nisn = s.Nisn,
@@ -60,7 +60,7 @@ namespace AppPenilaianSiswaAPI.Services.Implements
 
         public async Task<SiswaResponseDTO> GetById(int id)
         {
-            var s = await _context.Siswas.Include(s => s.Kelas).ThenInclude(s => s.Jurusan).FirstOrDefaultAsync(s => s.SiswaId == id);
+            var s = await _context.Siswas.AsNoTracking().Include(s => s.Kelas).ThenInclude(s => s.Jurusan).FirstOrDefaultAsync(s => s.SiswaId == id);
             if (s == null) throw new Exception($"Tidak ditemukan siswa dengan ID {id}");
             
             return new SiswaResponseDTO
@@ -106,6 +106,28 @@ namespace AppPenilaianSiswaAPI.Services.Implements
                 Jurusan = siswa.Kelas.Jurusan.NamaJurusan,
                 Picture = siswa.SiswaPicture,
             };
+        }
+
+        public async Task<IEnumerable<SiswaResponseDTO>> SearchSiswa(string namaSiswa)
+        {
+            var queryable = _context.Siswas.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(namaSiswa))
+            {
+                queryable = queryable.Where(s => s.NamaSiswa.Contains(namaSiswa.Trim()));
+            }
+
+            var siswa = await queryable.Select(s => new SiswaResponseDTO
+            {
+                SiswaId = s.SiswaId,
+                NamaSiswa = s.NamaSiswa,
+                Nisn = s.Nisn,
+                Picture = s.SiswaPicture,
+                Jurusan = s.Kelas.Jurusan.NamaJurusan,
+                Kelas = s.Kelas.NamaKelas
+            }).ToListAsync();
+
+            return siswa;
         }
     }
 }

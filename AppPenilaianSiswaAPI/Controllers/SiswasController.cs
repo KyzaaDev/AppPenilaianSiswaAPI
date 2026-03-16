@@ -78,8 +78,15 @@ namespace AppPenilaianSiswaAPI.Controllers
             {
                 return NotFound(ex.Message);
             }
-            
+        }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<SiswaResponseDTO>>> Search([FromQuery] string namaSiswa)
+        {
+            var scSiswa = await _siswaService.SearchSiswa(namaSiswa);
+
+            if (!scSiswa.Any()) return NotFound(new { message = $"Tidak ditemukan data dengan nama siswa {namaSiswa}" });
+            return Ok(scSiswa);
         }
     }
 }
