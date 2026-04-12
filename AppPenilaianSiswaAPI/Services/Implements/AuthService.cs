@@ -22,7 +22,7 @@ namespace AppPenilaianSiswaAPI.Services.Implements
 
         public async Task<AuthResponseDTO> Login(LoginRequestDTO data)
         {
-            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Username == data.Username);
+            var user = await _context.Operators.Include(u => u.Role).FirstOrDefaultAsync(u => u.Username == data.Username);
             if (user == null) return null;
 
             var isValid = BCrypt.Net.BCrypt.Verify(data.Password, user.Password);
